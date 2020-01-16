@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_term"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:drawableStart="@drawable/ic_history_24px"
+    android:drawablePadding="8dp"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:padding="@dimen/std_margin"
+    android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+    app:drawableTint="?colorPrimaryVariant"
+    tools:text="Tom Brady Search Item" />

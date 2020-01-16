@@ -1,0 +1,107 @@
+
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.0.0")
+}
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.thebradfo.flickrbrowser"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    buildTypes {
+
+        debug {
+            buildConfigField "String", "FLICKR_KEY", "\"1508443e49213ff84d566777dc211f2a\""
+        }
+
+        release {
+            buildConfigField "String", "FLICKR_KEY", "\"1508443e49213ff84d566777dc211f2a\""
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+detekt {
+    toolVersion = "1.0.0"
+    input = files(
+            "src/main/java",
+            "src/test/java"
+    )
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    def dagger_version = "2.23.1"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+
+    def retrofit_version = "2.5.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version") {
+        exclude group: 'commons-io', module: 'commons-io'
+        exclude module: 'okhttp'
+    }
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+
+    def lifecycle_version = "2.1.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    def autodisposable_version = "1.3.0"
+    implementation "com.uber.autodispose:autodispose:$autodisposable_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodisposable_version"
+
+    def groupie_version = "2.3.0"
+    implementation "com.xwray:groupie:$groupie_version"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+
+    // test dependencies
+    testImplementation 'junit:junit:4.12'
+
+    testImplementation 'org.mockito:mockito-core:2.26.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
+
+    testImplementation "com.uber.autodispose:autodispose-android-archcomponents-test:$autodisposable_version"
+}
