@@ -75,7 +75,11 @@ class HomeFragment: DaggerFragment(), HomePresenter.HomeView {
     }
 
     override fun showError() {
-        Snackbar.make(recycler_view, R.string.home_error, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(
+            requireActivity().findViewById(android.R.id.content),
+            R.string.home_error,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     override fun openImage(imageUri: String, description: String?) {

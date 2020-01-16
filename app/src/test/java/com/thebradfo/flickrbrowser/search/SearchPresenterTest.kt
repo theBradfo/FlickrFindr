@@ -159,8 +159,9 @@ class SearchPresenterTest {
 
         verify(searchView).showProgress()
         verify(searchView).hideProgress()
+        verify(searchView).hideEmptyState()
         verify(searchView).showError()
-        verify(searchView, never()).showEmptyState()
+        verify(searchView).showEmptyState()
 
         verify(groupAdapter, never()).addAll(any())
     }
@@ -178,6 +179,7 @@ class SearchPresenterTest {
 
         verify(searchView).showProgress()
         verify(searchView).hideProgress()
+        verify(searchView).hideEmptyState()
         verify(searchView, never()).showError()
         verify(searchView).showEmptyState()
 

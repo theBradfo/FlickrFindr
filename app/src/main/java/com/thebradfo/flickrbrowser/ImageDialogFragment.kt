@@ -43,6 +43,8 @@ class ImageDialogFragment: DialogFragment() {
             .into(image_view)
 
         description.text = imageDescription
+
+        close.setOnClickListener { dismissAllowingStateLoss() }
     }
 
     override fun onStart() {

@@ -90,7 +90,10 @@ internal class SearchPresenter @Inject constructor(
                     photos.map { ImageItem(it, searchView::openImage) }
                 }
                 .observeOn(mainScheduler)
-                .doOnEvent { _, _ -> searchView.hideProgress() }
+                .doOnEvent { _, _ ->
+                    searchView.hideEmptyState()
+                    searchView.hideProgress()
+                }
                 .subscribe(
                     {
                         groupAdapter.addAll(it)
@@ -104,6 +107,10 @@ internal class SearchPresenter @Inject constructor(
                     {
                         Timber.w(it, "Unable to fetch photos")
                         searchView.showError()
+
+                        if (groupAdapter.itemCount == 0) {
+                            searchView.showEmptyState()
+                        }
                     }
                 )
         }

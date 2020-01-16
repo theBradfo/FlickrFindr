@@ -39,7 +39,6 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
 
     private ProgressBar progressBar;
     private View emptyState;
-    private View root;
     private EditText searchTextView;
     private RecyclerView recyclerView;
 
@@ -57,7 +56,6 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
 
         progressBar = view.findViewById(R.id.progress);
         emptyState = view.findViewById(R.id.empty_state);
-        root = view;
         recyclerView = view.findViewById(R.id.recycler_view);
 
         recyclerView.setAdapter(groupAdapter);
@@ -124,7 +122,7 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
 
     @Override
     public void showError() {
-        Snackbar.make(root, R.string.search_error, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(requireActivity().findViewById(android.R.id.content), R.string.search_error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
