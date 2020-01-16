@@ -3,7 +3,7 @@ Sample Flickr Browser app
 
 ## Static Analysis
 - Added Detekt for kotlin static analysis and confirmed 0 failures with default config.
-- Ran lint and confirmed only a few neglible errors present.
+- Ran the default android linter and confirmed only a few neglible errors present.
 
 ## Details
 - Leveraged the Material Design Components Theme Builder to generate a proper material theme, which supports DayNight. The app has a "dark mode" toggle in-app.
