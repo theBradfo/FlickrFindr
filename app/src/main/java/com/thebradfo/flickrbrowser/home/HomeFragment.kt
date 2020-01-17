@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager.GAP_HANDLING_NONE
 import com.google.android.material.snackbar.Snackbar
 import com.thebradfo.flickrbrowser.ImageDialogFragment
 import com.thebradfo.flickrbrowser.R
@@ -39,15 +40,24 @@ class HomeFragment: DaggerFragment(), HomePresenter.HomeView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recycler_view.layoutManager = StaggeredGridLayoutManager(
+            requireContext().resources.getInteger(R.integer.span_count),
+            StaggeredGridLayoutManager.VERTICAL
+        ).apply {
+            // the images are not of a fixed size, so let's reduce the item shuffling by abandoning
+            //  this layoutmanager's gap strategy.
+            gapStrategy = GAP_HANDLING_NONE
+        }
+
         recycler_view.adapter = groupAdapter
         recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 recyclerView.layoutManager?.let { layoutManager ->
-                    if (layoutManager is GridLayoutManager) {
+                    if (layoutManager is StaggeredGridLayoutManager) {
                         presenter.pageScrolled(
                             layoutManager.childCount,
-                            layoutManager.findFirstVisibleItemPosition(),
+                            layoutManager.findFirstVisibleItemPositions(null).first(),
                             this@HomeFragment
                         )
                     }

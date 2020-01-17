@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.thebradfo.flickrbrowser.ImageDialogFragment;
@@ -58,6 +58,12 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
         emptyState = view.findViewById(R.id.empty_state);
         recyclerView = view.findViewById(R.id.recycler_view);
 
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        // the images are not of a fixed size, so let's reduce the item shuffling by abandoning
+        //  this layoutmanager's gap strategy.
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(groupAdapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -66,11 +72,11 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
                 super.onScrolled(recyclerView, dx, dy);
 
                 final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                if (layoutManager instanceof GridLayoutManager) {
-                    final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+                if (layoutManager instanceof StaggeredGridLayoutManager) {
+                    final StaggeredGridLayoutManager gridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
                     presenter.pageScrolled(
                             gridLayoutManager.getChildCount(),
-                            gridLayoutManager.findFirstVisibleItemPosition()
+                            gridLayoutManager.findFirstVisibleItemPositions(null)[0]
                     );
                 }
             }
@@ -138,8 +144,8 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
     @Override
     public void resetColumnCount() {
         final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            ((GridLayoutManager) layoutManager)
+        if (layoutManager instanceof StaggeredGridLayoutManager) {
+            ((StaggeredGridLayoutManager) layoutManager)
                     .setSpanCount(requireContext().getResources().getInteger(R.integer.span_count));
         }
     }
