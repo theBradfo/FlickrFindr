@@ -140,7 +140,7 @@ class SearchPresenterTest {
         verify(searchView, errorVerificationMode).showError()
         verify(searchView, emptyStateVerificationMode).showEmptyState()
 
-        verify(groupAdapter).addAll(data.map { ImageItem(it, searchView::openImage) })
+        verify(groupAdapter).update(data.map { ImageItem(it, searchView::openImage) })
 
         assertEquals(updatedText, searchPresenter.currentSearchTerm)
     }
@@ -183,6 +183,6 @@ class SearchPresenterTest {
         verify(searchView, never()).showError()
         verify(searchView).showEmptyState()
 
-        verify(groupAdapter).addAll(emptyList())
+        verify(groupAdapter).update(emptyList())
     }
 }

@@ -97,9 +97,14 @@ internal class SearchPresenter @Inject constructor(
     }
 
     /**
-     * The view has been provided a [text] string for search input.
+     * The view has been provided a [text] string for search input, this will either append or
+     * update the backing [GroupAdapter] given the [append] parameter.
      */
-    fun textEntered(text: String) {
+    @JvmOverloads
+    fun textEntered(
+        text: String,
+        append: Boolean = false
+    ) {
         if (text.isNotBlank()) {
             disposable?.dispose()
 
@@ -124,7 +129,11 @@ internal class SearchPresenter @Inject constructor(
                 }
                 .subscribe(
                     {
-                        groupAdapter.addAll(it)
+                        if (append) {
+                            groupAdapter.addAll(it)
+                        } else {
+                            groupAdapter.update(it)
+                        }
 
                         if (it.isEmpty() && groupAdapter.itemCount == 0) {
                             searchView.showEmptyState()
@@ -156,7 +165,7 @@ internal class SearchPresenter @Inject constructor(
             page.let {
                 if (!it.isLoading && (visibleItemCount + firstVisibleItemPosition) >= groupAdapter.itemCount) {
                     page.pageNumber++
-                    textEntered(searchTerm)
+                    textEntered(searchTerm, true)
                 }
             }
         }
