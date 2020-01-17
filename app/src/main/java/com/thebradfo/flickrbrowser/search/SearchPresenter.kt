@@ -31,20 +31,45 @@ internal class SearchPresenter @Inject constructor(
      * The MVP-style view contract for the [SearchPresenter].
      */
     interface SearchView {
-        fun showProgress()
 
-        fun hideProgress()
+        /**
+         * Show the loading view.
+         */
+        fun showLoading()
 
+        /**
+         * Hide the loading view.
+         */
+        fun hideLoading()
+
+        /**
+         * Show the empty state view.
+         */
         fun showEmptyState()
 
+        /**
+         * Hide the empty state view.
+         */
         fun hideEmptyState()
 
+        /**
+         * Show the generic error presentation.
+         */
         fun showError()
 
+        /**
+         * Open the image hosted at [imageUri] with backing [description].
+         */
         fun openImage(imageUri: String, description: String?)
 
+        /**
+         * Set the search view's value with [searchTerm].
+         */
         fun setSearchText(searchTerm: String)
 
+        /**
+         * Reset the column count for the backing view to the default.
+         */
         fun resetColumnCount()
     }
 
@@ -71,6 +96,9 @@ internal class SearchPresenter @Inject constructor(
         )
     }
 
+    /**
+     * The view has been provided a [text] string for search input.
+     */
     fun textEntered(text: String) {
         if (text.isNotBlank()) {
             disposable?.dispose()
@@ -84,7 +112,7 @@ internal class SearchPresenter @Inject constructor(
 
             disposable = flickrContentInteractor.getPhotos(text, page.pageNumber)
                 .observeOn(mainScheduler)
-                .doOnSubscribe { searchView.showProgress() }
+                .doOnSubscribe { searchView.showLoading() }
                 .observeOn(ioScheduler)
                 .map { photos ->
                     photos.map { ImageItem(it, searchView::openImage) }
@@ -92,7 +120,7 @@ internal class SearchPresenter @Inject constructor(
                 .observeOn(mainScheduler)
                 .doOnEvent { _, _ ->
                     searchView.hideEmptyState()
-                    searchView.hideProgress()
+                    searchView.hideLoading()
                 }
                 .subscribe(
                     {
@@ -116,6 +144,10 @@ internal class SearchPresenter @Inject constructor(
         }
     }
 
+    /**
+     * A rudimentary paging mechanism for the calling view, given the [visibleItemCount],
+     * [firstVisibleItemPosition].
+     */
     fun pageScrolled(
         visibleItemCount: Int,
         firstVisibleItemPosition: Int

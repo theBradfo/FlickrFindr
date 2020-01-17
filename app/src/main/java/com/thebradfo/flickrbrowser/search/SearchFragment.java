@@ -101,12 +101,12 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
     }
 
     @Override
-    public void showProgress() {
+    public void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideProgress() {
+    public void hideLoading() {
         progressBar.setVisibility(View.GONE);
     }
 

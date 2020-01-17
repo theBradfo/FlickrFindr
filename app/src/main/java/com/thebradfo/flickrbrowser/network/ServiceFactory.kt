@@ -12,13 +12,18 @@ import javax.inject.Inject
 import javax.inject.Named
 
 /**
- * A Factory to provide [api] access to retrofit service instances.
+ * A Factory to provide [api] access to retrofit service instances. This [Retrofit]-backed factory
+ * uses [Gson] for content serialization and deserialization.
  */
 class ServiceFactory @Inject constructor(
     @Named("BaseUri") baseUri: String,
     httpClient: OkHttpClient.Builder,
     gson: Gson
 ) {
+
+    /**
+     * The [Retrofit] api used to create all necessary accesses.
+     */
     val api: Retrofit = Retrofit.Builder()
         .baseUrl(baseUri)
         .client(

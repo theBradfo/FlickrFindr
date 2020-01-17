@@ -9,6 +9,9 @@ data class PhotosResponse(
     val photos: PhotosCollection
 )
 
+/**
+ * A wrapper of [Photo] objects from the response payload, containing [page] metadata.
+ */
 data class PhotosCollection(
     val page: Int,
     val pages: Int,

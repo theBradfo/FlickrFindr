@@ -29,6 +29,7 @@ public class FlickrBrowserApplication extends DaggerApplication {
 
         final SharedPreferences sharedPrefs = getFlickrBrowserPrefs(this);
 
+        // set the daynight theme based upon the shared preferences stored flag.
         ThemeHelper.setDayNightTheme(sharedPrefs.getBoolean(ThemeHelper.DARK_MODE_PREF_NAME, false));
     }
 

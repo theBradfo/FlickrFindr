@@ -135,8 +135,8 @@ class SearchPresenterTest {
 
         testScheduler.triggerActions()
 
-        verify(searchView).showProgress()
-        verify(searchView).hideProgress()
+        verify(searchView).showLoading()
+        verify(searchView).hideLoading()
         verify(searchView, errorVerificationMode).showError()
         verify(searchView, emptyStateVerificationMode).showEmptyState()
 
@@ -157,8 +157,8 @@ class SearchPresenterTest {
 
         testScheduler.triggerActions()
 
-        verify(searchView).showProgress()
-        verify(searchView).hideProgress()
+        verify(searchView).showLoading()
+        verify(searchView).hideLoading()
         verify(searchView).hideEmptyState()
         verify(searchView).showError()
         verify(searchView).showEmptyState()
@@ -177,8 +177,8 @@ class SearchPresenterTest {
 
         testScheduler.triggerActions()
 
-        verify(searchView).showProgress()
-        verify(searchView).hideProgress()
+        verify(searchView).showLoading()
+        verify(searchView).hideLoading()
         verify(searchView).hideEmptyState()
         verify(searchView, never()).showError()
         verify(searchView).showEmptyState()

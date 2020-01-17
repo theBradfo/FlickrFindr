@@ -49,6 +49,8 @@ class ImageDialogFragment: DialogFragment() {
 
     override fun onStart() {
         super.onStart()
+
+        // set the dialog size so it effectively matches the window width and wraps it's height
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 

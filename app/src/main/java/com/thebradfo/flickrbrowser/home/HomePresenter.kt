@@ -29,12 +29,24 @@ internal open class HomePresenter @Inject constructor(
      * MVP-style view contract for the [HomePresenter].
      */
     interface HomeView {
+        /**
+         * Show the loading view.
+         */
         fun showLoading()
 
+        /**
+         * Hide the loading view.
+         */
         fun hideLoading()
 
+        /**
+         * Show the generic error presentation.
+         */
         fun showError()
 
+        /**
+         * Open the image hosted at [imageUri] with backing [description].
+         */
         fun openImage(imageUri: String, description: String?)
     }
 
@@ -68,6 +80,10 @@ internal open class HomePresenter @Inject constructor(
             )
     }
 
+    /**
+     * A rudimentary paging mechanism for the calling view, given the [visibleItemCount],
+     * [firstVisibleItemPosition] and provided [owner] to bind disposable events to.
+     */
     fun pageScrolled(
         visibleItemCount: Int,
         firstVisibleItemPosition: Int,

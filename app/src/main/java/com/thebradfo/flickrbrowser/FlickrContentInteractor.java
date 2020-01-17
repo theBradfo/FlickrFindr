@@ -42,10 +42,21 @@ public class FlickrContentInteractor {
         this.ioScheduler = ioScheduler;
     }
 
+    /**
+     * An api to populate the "home" screen of content, with the backing constant search term.
+     * @param page The page number to return results for.
+     * @return A single stream of List of Photos matching the search criteria and page.
+     */
     public Single<List<Photo>> getHomePhotos(int page) {
         return getPhotos(DEFAULT_SEARCH_TERM, page);
     }
 
+    /**
+     * Provides a list of Photo models from the backing retrofit flickrService.
+     * @param searchTerm The search text to return results for.
+     * @param page The page number to search for.
+     * @return A single stream of List of Photos matching the search criteria and page.
+     */
     public Single<List<Photo>> getPhotos(@NonNull final String searchTerm, int page) {
         return flickrService.getPhotos(apiKey, searchTerm, COUNT, page)
                 .subscribeOn(ioScheduler)

@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatDelegate
 object ThemeHelper {
     const val DARK_MODE_PREF_NAME = "DARK_MODE_ENABLED"
 
+    /**
+     * Overrides the day night theme via the provided [isDarkTheme] boolean.
+     */
     @JvmStatic
     fun setDayNightTheme(isDarkTheme: Boolean) {
 
