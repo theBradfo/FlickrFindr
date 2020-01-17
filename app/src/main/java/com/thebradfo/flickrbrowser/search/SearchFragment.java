@@ -62,6 +62,10 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
         // the images are not of a fixed size, so let's reduce the item shuffling by abandoning
         //  this layoutmanager's gap strategy.
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+
+        // default the span count to 0 since we have show search results initially
+        layoutManager.setSpanCount(1);
+
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(groupAdapter);
