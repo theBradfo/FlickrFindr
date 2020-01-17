@@ -58,7 +58,10 @@ public class SearchFragment extends DaggerFragment implements SearchPresenter.Se
         emptyState = view.findViewById(R.id.empty_state);
         recyclerView = view.findViewById(R.id.recycler_view);
 
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(
+                requireContext().getResources().getInteger(R.integer.span_count),
+                StaggeredGridLayoutManager.VERTICAL);
         // the images are not of a fixed size, so let's reduce the item shuffling by abandoning
         //  this layoutmanager's gap strategy.
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
